@@ -161,40 +161,63 @@ export default function CartComponent() {
 
   return (
     <div className="space-y-6">
-      <form onSubmit={handleAddCartItem} className="p-6 bg-slate-50 rounded-lg shadow space-y-4">
-        <h3 className="text-xl font-semibold text-slate-700 mb-4">Add Item to Cart</h3>
-        <div>
-          <label htmlFor="itemName" className="block text-sm font-medium text-slate-700">Item Name*</label>
-          <input id="itemName" type="text" value={itemName} onChange={(e) => setItemName(e.target.value)} placeholder="e.g., Laptop Stand" required
-            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="p-6 bg-slate-50 rounded-lg shadow space-y-4">
+        <h3 className="text-xl font-semibold text-slate-800 mb-2">Shopping Cart</h3>
+        <p className="text-sm text-slate-700 mb-3">
+          Add items to your cart and track their prices. You can set a desired price and get notified when the price drops.
+        </p>
+        <form onSubmit={handleAddCartItem} className="space-y-4">
+          <div>
+            <label htmlFor="itemName" className="block text-sm font-medium text-slate-700">Item Name</label>
+            <input
+              id="itemName"
+              type="text"
+              value={itemName}
+              onChange={(e) => setItemName(e.target.value)}
+              placeholder="e.g., Laptop"
+              className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
+            />
+          </div>
           <div>
             <label htmlFor="itemQuantity" className="block text-sm font-medium text-slate-700">Quantity*</label>
             <input id="itemQuantity" type="number" value={itemQuantity} onChange={(e) => setItemQuantity(e.target.value)} min="1" required
-              className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm" />
           </div>
           <div>
             <label htmlFor="itemEstPrice" className="block text-sm font-medium text-slate-700">Estimated Price (₹)</label>
             <input id="itemEstPrice" type="number" value={itemEstPrice} onChange={(e) => setItemEstPrice(e.target.value)} placeholder="e.g., 2000.00"
-              className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+              className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm" />
           </div>
-        </div>
-        <div>
-          <label htmlFor="itemProductUrl" className="block text-sm font-medium text-slate-700">Product URL (Amazon/Flipkart for tracking)</label>
-          <input id="itemProductUrl" type="url" value={itemProductUrl} onChange={(e) => setItemProductUrl(e.target.value)} placeholder="https://www.amazon.in/..."
-            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-        </div>
-        <div>
-          <label htmlFor="itemDesiredPrice" className="block text-sm font-medium text-slate-700">Desired Price (₹ for tracking)</label>
-          <input id="itemDesiredPrice" type="number" value={itemDesiredPrice} onChange={(e) => setItemDesiredPrice(e.target.value)} placeholder="e.g., 1800.00"
-            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-        </div>
-        <button type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Add to Cart
-        </button>
-      </form>
+          <div>
+            <label htmlFor="itemProductUrl" className="block text-sm font-medium text-slate-700">Product URL (Optional)</label>
+            <input
+              id="itemProductUrl"
+              type="url"
+              value={itemProductUrl}
+              onChange={(e) => setItemProductUrl(e.target.value)}
+              placeholder="https://..."
+              className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
+            />
+          </div>
+          <div>
+            <label htmlFor="itemDesiredPrice" className="block text-sm font-medium text-slate-700">Desired Price (₹)</label>
+            <input
+              id="itemDesiredPrice"
+              type="number"
+              value={itemDesiredPrice}
+              onChange={(e) => setItemDesiredPrice(e.target.value)}
+              placeholder="e.g., 45000"
+              className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
+            />
+          </div>
+          <button
+            type="submit"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+          >
+            Add to Cart
+          </button>
+        </form>
+      </div>
 
       {editingItem && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -203,74 +226,78 @@ export default function CartComponent() {
             <div>
               <label htmlFor="editUrl" className="block text-sm font-medium text-slate-700">Product URL</label>
               <input type="url" id="editUrl" value={editUrl} onChange={(e) => setEditUrl(e.target.value)} 
-                     className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                     className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm" />
             </div>
             <div>
               <label htmlFor="editDesiredPrice" className="block text-sm font-medium text-slate-700">Desired Price (₹)</label>
               <input type="number" id="editDesiredPrice" value={editDesiredPrice} onChange={(e) => setEditDesiredPrice(e.target.value)}
-                     className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+                     className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm" />
             </div>
             <div className="flex justify-end space-x-3">
               <button onClick={() => setEditingItem(null)} className="px-4 py-2 text-sm font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-md">Cancel</button>
-              <button onClick={handleSaveTrackingDetails} className="px-4 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md">Save Changes</button>
+              <button onClick={handleSaveTrackingDetails} className="px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md">Save Changes</button>
             </div>
           </div>
         </div>
       )}
 
       <div className="mt-8">
-        <h3 className="text-xl font-semibold text-slate-700 mb-4">Your Shopping Cart</h3>
+        <h3 className="text-xl font-semibold text-slate-800 mb-4">Cart Items</h3>
         {cartItems.length === 0 ? (
-          <p className="text-slate-500">Your cart is empty.</p>
+          <p className="text-slate-600">No items in your cart yet.</p>
         ) : (
           <ul className="space-y-4">
             {cartItems.map((item) => (
               <li key={item._id} className="p-4 bg-white shadow rounded-lg space-y-3">
-                <div className="flex flex-wrap justify-between items-start gap-x-4 gap-y-2">
-                  <div className="flex-grow">
-                    <p className="font-semibold text-slate-800">{item.name} (Qty: {item.quantity})</p>
-                    {item.estimatedPrice !== undefined && (
-                      <p className="text-sm text-slate-500">Est. Price: {formatCurrency(item.estimatedPrice)}</p>
-                    )}
-                    {item.foundPrice && (
-                       <p className="text-sm text-purple-600 mt-1">AI Suggestion: {item.foundPrice}</p>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h4 className="text-lg font-medium text-slate-800">{item.name}</h4>
+                    <p className="text-sm text-slate-600">Current Price: {formatCurrency(item.currentPrice)}</p>
+                    {item.desiredPrice !== undefined && (
+                      <p className="text-sm text-slate-600">Desired Price: {formatCurrency(item.desiredPrice)}</p>
                     )}
                   </div>
-                  <div className="flex items-center space-x-2 flex-shrink-0">
-                    <button onClick={() => handleFindAiPrices(item)} disabled={findingAiPriceFor === item._id}
-                      className="px-3 py-1 text-xs font-medium rounded-full bg-purple-100 text-purple-700 hover:bg-purple-200 disabled:opacity-50 whitespace-nowrap">
-                      {findingAiPriceFor === item._id ? "Suggesting..." : "AI Suggestion"}
-                    </button>
-                    <button onClick={() => handleRemoveCartItem(item._id)} className="text-red-500 hover:text-red-700 text-sm font-medium">
-                      Remove
-                    </button>
-                  </div>
+                  <button
+                    onClick={() => handleRemoveCartItem(item._id)}
+                    className="text-red-600 hover:text-red-700 text-sm font-medium"
+                  >
+                    Remove
+                  </button>
                 </div>
 
-                {/* Price Tracking Section */}
                 <div className="mt-2 pt-3 border-t border-slate-200 space-y-2">
-                  <p className="text-sm font-medium text-slate-600">Price Tracking:</p>
+                  <p className="text-sm font-medium text-slate-700">Price Tracking:</p>
                   {item.productUrl ? (
                     <>
-                      <p className="text-xs text-slate-500 truncate">URL: <a href={item.productUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">{item.productUrl}</a></p>
-                      <p className="text-xs text-slate-500">Desired Price: {item.desiredPrice !== undefined ? formatCurrency(item.desiredPrice) : "Not set"}</p>
-                      <p className="text-xs text-slate-500">
-                        Current Price: {formatCurrency(item.currentPrice)}
-                        {item.priceCheckStatus === "BELOW_DESIRED" && <span className="ml-2 px-2 py-0.5 text-xs font-semibold bg-green-100 text-green-700 rounded-full">Below Desired!</span>}
+                      <p className="text-xs text-slate-600 truncate">
+                        URL: <a href={item.productUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{item.productUrl}</a>
                       </p>
-                      <p className="text-xs text-slate-500">Status: <span className="font-medium">{item.priceCheckStatus || "Not Tracking"}</span> (Last: {formatTimestamp(item.lastChecked)})</p>
+                      <p className="text-xs text-slate-600">Desired Price: {item.desiredPrice !== undefined ? formatCurrency(item.desiredPrice) : "Not set"}</p>
+                      <p className="text-xs text-slate-600">
+                        Current Price: {formatCurrency(item.currentPrice)}
+                        {item.priceCheckStatus === "BELOW_DESIRED" && (
+                          <span className="ml-2 px-2 py-0.5 text-xs font-semibold bg-emerald-100 text-emerald-700 rounded-full">Below Desired!</span>
+                        )}
+                      </p>
+                      <p className="text-xs text-slate-600">Status: <span className="font-medium">{item.priceCheckStatus || "Not Tracking"}</span> (Last: {formatTimestamp(item.lastChecked)})</p>
                       <div className="flex space-x-2 mt-1">
-                        <button onClick={() => setEditingItem(item)} className="px-2 py-1 text-xs font-medium rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700">Edit Tracking</button>
-                        <button onClick={() => handleCheckLivePrice(item)} disabled={checkingLivePriceFor === item._id}
-                          className="px-2 py-1 text-xs font-medium rounded-md bg-blue-100 text-blue-700 hover:bg-blue-200 disabled:opacity-50">
+                        <button
+                          onClick={() => setEditingItem(item)}
+                          className="px-2 py-1 text-xs font-medium rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700"
+                        >
+                          Edit Tracking
+                        </button>
+                        <button
+                          onClick={() => handleCheckLivePrice(item)}
+                          disabled={checkingLivePriceFor === item._id}
+                          className="px-2 py-1 text-xs font-medium rounded-md bg-blue-100 text-blue-700 hover:bg-blue-200 disabled:opacity-50"
+                        >
                           {checkingLivePriceFor === item._id ? "Checking..." : "Check Price Now"}
                         </button>
                       </div>
                     </>
                   ) : (
-                    <button onClick={() => setEditingItem(item)} className="px-3 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-700 hover:bg-slate-200">
-                      Add Tracking Details
-                    </button>
+                    <p className="text-xs text-slate-600">Add a product URL to enable price tracking.</p>
                   )}
                 </div>
               </li>

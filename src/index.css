@@ -1,49 +1,690 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root {
-  --color-light: #ffffff;
-  --color-dark: #171717;
+    /* Light mode colors */
+    --color-light: #ffffff;
+    --color-dark: #1a1a1a;
+    --color-primary: #4f46e5;
+    --color-primary-dark: #4338ca;
+    --color-secondary: #6366f1;
+    --color-accent: #818cf8;
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-error: #ef4444;
+    --color-background: #f8fafc;
+    --color-surface: #ffffff;
+    --color-border: #e2e8f0;
+    --color-text: #1a1a1a;
+    --color-text-secondary: #475569;
 }
 
-.accent-text {
-  @apply text-slate-600;
+[data-theme="dark"] {
+    --color-light: #0f172a;
+    --color-dark: #f8fafc;
+    --color-primary: #818cf8;
+    --color-primary-dark: #6366f1;
+    --color-secondary: #4f46e5;
+    --color-accent: #4338ca;
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-error: #f87171;
+    --color-background: #0f172a;
+    --color-surface: #1e293b;
+    --color-border: #334155;
+    --color-text: #f8fafc;
+    --color-text-secondary: #94a3b8;
 }
+
+
+/* Theme transition */
+
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+/* Base animations */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+
+/* Apply animations to main content */
+
+main {
+    animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* Card and container animations */
+
+.bg-white,
+.bg-slate-50 {
+    animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
+}
+
+.bg-white:hover,
+.bg-slate-50:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+
+/* Button animations */
 
 .button {
-  @apply bg-gradient-to-r bg-blue-500;
+    @apply bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600;
+    background-size: 200% 100%;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    background-position: right center;
+}
+
+.button:active {
+    transform: translateY(0);
+}
+
+
+/* Input field animations */
+
+.input-field {
+    @apply w-full px-3 py-2 rounded-md bg-transparent border-2 border-slate-200 transition-all duration-300;
+}
+
+.input-field:focus {
+    @apply outline-none border-indigo-500;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+
+/* Auth button animations */
+
+.auth-button {
+    @apply w-full py-2 rounded-md text-white font-medium button transition-all duration-300;
+}
+
+.auth-button:hover {
+    @apply opacity-90;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+.auth-button:active {
+    transform: translateY(0);
+}
+
+
+/* Link animations */
+
+.link-text {
+    @apply text-indigo-600 cursor-pointer font-medium transition-all duration-300;
+    position: relative;
+}
+
+.link-text::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: var(--color-primary);
+    transform: scaleX(0);
+    transform-origin: bottom right;
+    transition: transform 0.3s ease-out;
+}
+
+.link-text:hover {
+    @apply text-indigo-700;
+    transform: translateY(-1px);
+}
+
+.link-text:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+
+/* List item animations */
+
+li {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+li:hover {
+    transform: translateX(8px);
+    background: linear-gradient(90deg, rgba(99, 102, 241, 0.1) 0%, rgba(99, 102, 241, 0) 100%);
+}
+
+
+/* Form animations */
+
+form {
+    animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* Toast notifications animation */
+
+[data-sonner-toast] {
+    animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* Loading spinner animation */
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* Chart animations */
+
+canvas {
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+canvas:hover {
+    transform: scale(1.03);
+    filter: brightness(1.05);
+}
+
+
+/* Modal animations */
+
+.modal-enter {
+    animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+
+/* Delete button animation */
+
+button[class*="text-red-"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+button[class*="text-red-"]:hover {
+    transform: scale(1.1);
+    text-shadow: 0 0 8px rgba(239, 68, 68, 0.3);
+}
+
+
+/* Status badge animations */
+
+[class*="rounded-full"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[class*="rounded-full"]:hover {
+    transform: scale(1.05);
+    animation: pulse 1s infinite;
+}
+
+
+/* Success state animations */
+
+[class*="bg-emerald-"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[class*="bg-emerald-"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
+
+
+/* Warning state animations */
+
+[class*="bg-amber-"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[class*="bg-amber-"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+
+
+/* Shimmer effect for loading states */
+
+.shimmer {
+    background: linear-gradient( 90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
 }
 
 body {
-  font-family:
-    "Inter Variable",
-    ui-sans-serif,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    "Helvetica Neue",
-    Arial,
-    "Noto Sans",
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol",
-    "Noto Color Emoji";
-  color: var(--color-dark);
-  background: var(--color-light);
+    font-family: "Inter Variable", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    color: var(--color-dark);
+    background: var(--color-background);
 }
 
-.input-field {
-  @apply w-full px-3 py-2 rounded-md bg-transparent border-2 border-slate-200 focus:outline-none focus:border-blue-500 transition-colors;
+.accent-text {
+    @apply text-slate-700;
 }
 
-.auth-button {
-  @apply w-full py-2 rounded-md text-white font-medium button hover:opacity-90 transition-opacity;
+
+/* Theme toggle button */
+
+.theme-toggle {
+    @apply fixed bottom-4 right-4 p-3 rounded-full bg-indigo-600 text-white shadow-lg transition-all duration-300;
+    z-index: 50;
 }
 
-.link-text {
-  @apply text-blue-500 hover:underline cursor-pointer font-medium;
+.theme-toggle:hover {
+    @apply bg-indigo-700;
+    transform: scale(1.1);
+}
+
+.theme-toggle:active {
+    transform: scale(0.95);
+}
+
+.theme-toggle svg {
+    @apply w-6 h-6;
+}
+
+
+/* Dark mode specific styles */
+
+[data-theme="dark"] .bg-white {
+    @apply bg-slate-800 shadow-lg;
+}
+
+[data-theme="dark"] .bg-slate-50 {
+    @apply bg-slate-900;
+}
+
+[data-theme="dark"] .text-slate-700 {
+    @apply text-slate-200;
+}
+
+[data-theme="dark"] .text-slate-600 {
+    @apply text-slate-300;
+}
+
+[data-theme="dark"] .border-slate-200 {
+    @apply border-slate-700;
+}
+
+[data-theme="dark"] .input-field {
+    @apply bg-slate-800 text-white border-slate-700;
+}
+
+[data-theme="dark"] .input-field:focus {
+    @apply border-indigo-400 ring-2 ring-indigo-500/20;
+}
+
+[data-theme="dark"] .accent-text {
+    @apply text-slate-200;
+}
+
+
+/* Enhanced dark mode styles */
+
+[data-theme="dark"] .bg-blue-700 {
+    @apply bg-indigo-900;
+}
+
+[data-theme="dark"] .text-blue-700 {
+    @apply text-indigo-400;
+}
+
+[data-theme="dark"] .border-blue-600 {
+    @apply border-indigo-500;
+}
+
+[data-theme="dark"] .hover\:text-slate-800:hover {
+    @apply text-slate-200;
+}
+
+[data-theme="dark"] .hover\:border-slate-300:hover {
+    @apply border-slate-600;
+}
+
+[data-theme="dark"] .shadow-xl {
+    @apply shadow-2xl shadow-slate-900/50;
+}
+
+[data-theme="dark"] .button {
+    @apply bg-gradient-to-r from-indigo-600 via-indigo-500 to-indigo-600;
+}
+
+[data-theme="dark"] .button:hover {
+    @apply from-indigo-500 via-indigo-400 to-indigo-500;
+}
+
+
+/* Dark mode form elements */
+
+[data-theme="dark"] input::placeholder {
+    @apply text-slate-500;
+}
+
+[data-theme="dark"] select {
+    @apply bg-slate-800 text-white border-slate-700;
+}
+
+[data-theme="dark"] select:focus {
+    @apply border-indigo-400 ring-2 ring-indigo-500/20;
+}
+
+
+/* Dark mode status indicators */
+
+[data-theme="dark"] .bg-emerald-100 {
+    @apply bg-emerald-900/30;
+}
+
+[data-theme="dark"] .text-emerald-700 {
+    @apply text-emerald-400;
+}
+
+[data-theme="dark"] .bg-amber-100 {
+    @apply bg-amber-900/30;
+}
+
+[data-theme="dark"] .text-amber-700 {
+    @apply text-amber-400;
+}
+
+
+/* Dark mode loading spinner */
+
+[data-theme="dark"] .border-indigo-500 {
+    @apply border-indigo-400;
+}
+
+
+/* Dark mode theme toggle */
+
+[data-theme="dark"] .theme-toggle {
+    @apply bg-indigo-600 text-white shadow-lg shadow-indigo-500/20;
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    @apply bg-indigo-500;
+}
+
+
+/* Dark mode card hover effects */
+
+[data-theme="dark"] .bg-white:hover {
+    @apply bg-slate-800/90 shadow-xl shadow-slate-900/50;
+}
+
+
+/* Dark mode text gradients */
+
+[data-theme="dark"] .text-gradient {
+    @apply bg-gradient-to-r from-indigo-400 to-indigo-200 bg-clip-text text-transparent;
+}
+
+
+/* Dark mode focus rings */
+
+[data-theme="dark"] *:focus-visible {
+    @apply ring-2 ring-indigo-500/50 ring-offset-2 ring-offset-slate-900;
+}
+
+
+/* Dark mode scrollbar */
+
+[data-theme="dark"] ::-webkit-scrollbar {
+    @apply w-2;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-track {
+    @apply bg-slate-800;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    @apply bg-slate-600 rounded-full;
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+}
+
+
+/* Dark mode text enhancements */
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+    @apply text-slate-100 font-semibold;
+}
+
+[data-theme="dark"] h1 {
+    @apply text-4xl bg-gradient-to-r from-indigo-400 to-indigo-200 bg-clip-text text-transparent;
+}
+
+[data-theme="dark"] h2 {
+    @apply text-3xl text-indigo-300;
+}
+
+[data-theme="dark"] h3 {
+    @apply text-2xl text-indigo-200;
+}
+
+[data-theme="dark"] p {
+    @apply text-slate-300 leading-relaxed;
+}
+
+[data-theme="dark"] .text-slate-700 {
+    @apply text-slate-200;
+}
+
+[data-theme="dark"] .text-slate-600 {
+    @apply text-slate-300;
+}
+
+[data-theme="dark"] .text-slate-500 {
+    @apply text-slate-400;
+}
+
+[data-theme="dark"] .text-blue-700 {
+    @apply text-indigo-300;
+}
+
+[data-theme="dark"] .text-emerald-700 {
+    @apply text-emerald-300;
+}
+
+[data-theme="dark"] .text-amber-700 {
+    @apply text-amber-300;
+}
+
+[data-theme="dark"] .text-red-700 {
+    @apply text-red-300;
+}
+
+
+/* Dark mode link text */
+
+[data-theme="dark"] .link-text {
+    @apply text-indigo-300;
+}
+
+[data-theme="dark"] .link-text:hover {
+    @apply text-indigo-200;
+}
+
+[data-theme="dark"] .link-text::after {
+    @apply bg-indigo-400;
+}
+
+
+/* Dark mode button text */
+
+[data-theme="dark"] .button {
+    @apply text-white font-medium;
+}
+
+
+/* Dark mode form labels */
+
+[data-theme="dark"] label {
+    @apply text-slate-200 font-medium;
+}
+
+
+/* Dark mode placeholder text */
+
+[data-theme="dark"] ::placeholder {
+    @apply text-slate-500;
+}
+
+
+/* Dark mode selection text */
+
+[data-theme="dark"] ::selection {
+    @apply bg-indigo-500/30 text-white;
+}
+
+
+/* Dark mode code text */
+
+[data-theme="dark"] code {
+    @apply text-emerald-300 bg-slate-800/50 px-1.5 py-0.5 rounded;
+}
+
+
+/* Dark mode blockquote text */
+
+[data-theme="dark"] blockquote {
+    @apply border-l-4 border-indigo-500 pl-4 text-slate-300 italic;
+}
+
+
+/* Dark mode list text */
+
+[data-theme="dark"] ul li,
+[data-theme="dark"] ol li {
+    @apply text-slate-300;
+}
+
+
+/* Dark mode table text */
+
+[data-theme="dark"] th {
+    @apply text-slate-200 font-semibold;
+}
+
+[data-theme="dark"] td {
+    @apply text-slate-300;
+}
+
+
+/* Dark mode card text */
+
+[data-theme="dark"] .card-title {
+    @apply text-slate-100 font-semibold;
+}
+
+[data-theme="dark"] .card-subtitle {
+    @apply text-slate-300;
+}
+
+
+/* Dark mode status text */
+
+[data-theme="dark"] .status-text {
+    @apply text-slate-200 font-medium;
+}
+
+
+/* Dark mode error text */
+
+[data-theme="dark"] .error-text {
+    @apply text-red-300;
+}
+
+
+/* Dark mode success text */
+
+[data-theme="dark"] .success-text {
+    @apply text-emerald-300;
+}
+
+
+/* Dark mode warning text */
+
+[data-theme="dark"] .warning-text {
+    @apply text-amber-300;
+}
+
+
+/* Dark mode info text */
+
+[data-theme="dark"] .info-text {
+    @apply text-indigo-300;
 }

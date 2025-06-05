@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import ExpensesComponent from "./ExpensesComponent";
 import CartComponent from "./CartComponent";
 import ExpenseGraphsComponent from "./ExpenseGraphsComponent";
+import { ThemeToggle } from './ThemeToggle';
 
 // Helper to format currency for header display
 const formatCurrencyForHeader = (amount?: number | null) => {
@@ -29,7 +30,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
-      <header className="sticky top-0 z-10 bg-indigo-600 text-white shadow-md">
+      <header className="sticky top-0 z-10 bg-blue-700 text-white shadow-md">
         <div className="container mx-auto p-4 flex justify-between items-center">
           <h2 className="text-2xl font-bold">College Expense Tracker</h2>
           <div className="flex items-center space-x-4">
@@ -51,8 +52,8 @@ export default function App() {
         <Unauthenticated>
           <div className="flex flex-col items-center justify-center h-full">
             <div className="w-full max-w-md p-8 bg-white shadow-xl rounded-lg text-center">
-              <h1 className="text-4xl font-bold text-indigo-600 mb-6">Welcome!</h1>
-              <p className="text-lg text-slate-600 mb-8">
+              <h1 className="text-4xl font-bold text-blue-700 mb-6">Welcome!</h1>
+              <p className="text-lg text-slate-700 mb-8">
                 Sign in to track your college expenses and find the best deals.
               </p>
               <SignInForm />
@@ -60,6 +61,7 @@ export default function App() {
           </div>
         </Unauthenticated>
       </main>
+      <ThemeToggle />
       <Toaster richColors />
     </div>
   );
@@ -89,10 +91,10 @@ function Content() {
   return (
     <div className="bg-white p-6 sm:p-8 shadow-xl rounded-lg">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-semibold text-indigo-700 mb-2">
+        <h1 className="text-3xl font-semibold text-blue-700 mb-2">
           Hello, {loggedInUser?.name ?? loggedInUser?.email ?? "Tracker"}!
         </h1>
-        <p className="text-slate-500">Manage your finances effectively.</p>
+        <p className="text-slate-700">Manage your finances effectively.</p>
       </div>
 
       <div className="mb-6 border-b border-slate-200">
@@ -101,8 +103,8 @@ function Content() {
             onClick={() => setActiveTab("expenses")}
             className={`py-3 px-2 sm:px-4 font-medium text-sm border-b-2
               ${activeTab === "expenses"
-                ? "border-indigo-500 text-indigo-600"
-                : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                ? "border-blue-600 text-blue-700"
+                : "border-transparent text-slate-600 hover:text-slate-800 hover:border-slate-300"
               }`}
           >
             Expenses
@@ -111,8 +113,8 @@ function Content() {
             onClick={() => setActiveTab("cart")}
             className={`py-3 px-2 sm:px-4 font-medium text-sm border-b-2
               ${activeTab === "cart"
-                ? "border-indigo-500 text-indigo-600"
-                : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                ? "border-blue-600 text-blue-700"
+                : "border-transparent text-slate-600 hover:text-slate-800 hover:border-slate-300"
               }`}
           >
             Shopping Cart
@@ -121,8 +123,8 @@ function Content() {
             onClick={() => setActiveTab("graphs")}
             className={`py-3 px-2 sm:px-4 font-medium text-sm border-b-2
               ${activeTab === "graphs"
-                ? "border-indigo-500 text-indigo-600"
-                : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300"
+                ? "border-blue-600 text-blue-700"
+                : "border-transparent text-slate-600 hover:text-slate-800 hover:border-slate-300"
               }`}
           >
             Graphs & Budget

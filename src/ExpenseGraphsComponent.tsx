@@ -100,8 +100,26 @@ export default function ExpenseGraphsComponent() {
       {
         label: 'Expenses by Category (₹)',
         data: categoryData,
-        backgroundColor: ['rgba(255, 99, 132, 0.7)','rgba(54, 162, 235, 0.7)','rgba(255, 206, 86, 0.7)','rgba(75, 192, 192, 0.7)','rgba(153, 102, 255, 0.7)','rgba(255, 159, 64, 0.7)','rgba(199, 199, 199, 0.7)','rgba(83, 102, 255, 0.7)',],
-        borderColor: ['rgba(255, 99, 132, 1)','rgba(54, 162, 235, 1)','rgba(255, 206, 86, 1)','rgba(75, 192, 192, 1)','rgba(153, 102, 255, 1)','rgba(255, 159, 64, 1)','rgba(199, 199, 199, 1)','rgba(83, 102, 255, 1)',],
+        backgroundColor: [
+          'rgba(37, 99, 235, 0.7)',  // blue
+          'rgba(5, 150, 105, 0.7)',  // emerald
+          'rgba(217, 119, 6, 0.7)',  // amber
+          'rgba(71, 85, 105, 0.7)',  // slate
+          'rgba(15, 23, 42, 0.7)',   // slate-900
+          'rgba(220, 38, 38, 0.7)',  // red
+          'rgba(139, 92, 246, 0.7)', // violet
+          'rgba(236, 72, 153, 0.7)', // pink
+        ],
+        borderColor: [
+          'rgba(37, 99, 235, 1)',
+          'rgba(5, 150, 105, 1)',
+          'rgba(217, 119, 6, 1)',
+          'rgba(71, 85, 105, 1)',
+          'rgba(15, 23, 42, 1)',
+          'rgba(220, 38, 38, 1)',
+          'rgba(139, 92, 246, 1)',
+          'rgba(236, 72, 153, 1)',
+        ],
         borderWidth: 1,
       },
     ],
@@ -110,7 +128,15 @@ export default function ExpenseGraphsComponent() {
 
   // Data for Expenses Over Time Line Chart
   const expensesOverTime = expenses.slice().sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()).map(expense => ({ x: new Date(expense.date), y: expense.amount }));
-  const lineData = { datasets: [{ label: 'Expenses Over Time (₹)', data: expensesOverTime, fill: false, borderColor: 'rgb(75, 192, 192)', tension: 0.1, },], };
+  const lineData = {
+    datasets: [{
+      label: 'Expenses Over Time (₹)',
+      data: expensesOverTime,
+      fill: false,
+      borderColor: 'rgb(37, 99, 235)',
+      tension: 0.1,
+    }],
+  };
   const lineOptions = { scales: { x: { type: 'time' as const, time: { unit: 'month' as const, tooltipFormat: 'MMM yyyy' as const, }, title: { display: true, text: 'Date' as const, }, }, y: { title: { display: true, text: 'Amount (₹)' as const, }, beginAtZero: true, ticks: { callback: (value: string | number) => formatCurrency(Number(value), '') } } }, responsive: true, maintainAspectRatio: false, plugins: { tooltip: { callbacks: { label: (context: any) => `${context.dataset.label || ''}: ${formatCurrency(context.parsed.y)}` } } } };
   
   // Data for Purchased vs. Pending Bar Chart
@@ -122,7 +148,22 @@ export default function ExpenseGraphsComponent() {
     }
     return acc;
   }, { purchased: 0, pending: 0 });
-  const purchasedBarData = { labels: ['Purchased', 'Pending'], datasets: [{ label: 'Total Amount (₹)', data: [purchasedStatusData.purchased, purchasedStatusData.pending], backgroundColor: ['rgba(75, 192, 192, 0.7)', 'rgba(255, 159, 64, 0.7)'], borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 159, 64, 1)'], borderWidth: 1, },], };
+  const purchasedBarData = {
+    labels: ['Purchased', 'Pending'],
+    datasets: [{
+      label: 'Total Amount (₹)',
+      data: [purchasedStatusData.purchased, purchasedStatusData.pending],
+      backgroundColor: [
+        'rgba(5, 150, 105, 0.7)',   // emerald
+        'rgba(217, 119, 6, 0.7)',   // amber
+      ],
+      borderColor: [
+        'rgba(5, 150, 105, 1)',
+        'rgba(217, 119, 6, 1)',
+      ],
+      borderWidth: 1,
+    }],
+  };
   const purchasedBarOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'top' as const, }, title: { display: true, text: 'Purchased vs. Pending Expenses (₹)', }, tooltip: { callbacks: { label: (context: any) => `${context.dataset.label || ''}: ${formatCurrency(context.parsed.y)}` } } }, scales: { y: { beginAtZero: true, ticks: { callback: (value: string | number) => formatCurrency(Number(value),'') } } } };
 
   // Data for Budget vs. Expenses Bar Chart
@@ -133,12 +174,12 @@ export default function ExpenseGraphsComponent() {
         label: 'Amount (₹)',
         data: [totalBudget ?? 0, totalExpenses],
         backgroundColor: [
-          totalBudget === undefined ? 'rgba(200, 200, 200, 0.7)' : 'rgba(54, 162, 235, 0.7)', // Grey if no budget
-          'rgba(255, 99, 132, 0.7)',
+          totalBudget === undefined ? 'rgba(71, 85, 105, 0.7)' : 'rgba(37, 99, 235, 0.7)', // slate if no budget, blue otherwise
+          'rgba(220, 38, 38, 0.7)', // red
         ],
         borderColor: [
-          totalBudget === undefined ? 'rgba(200, 200, 200, 1)' : 'rgba(54, 162, 235, 1)',
-          'rgba(255, 99, 132, 1)',
+          totalBudget === undefined ? 'rgba(71, 85, 105, 1)' : 'rgba(37, 99, 235, 1)',
+          'rgba(220, 38, 38, 1)',
         ],
         borderWidth: 1,
       },
@@ -155,36 +196,47 @@ export default function ExpenseGraphsComponent() {
     <div className="space-y-10 py-8">
       {/* Budget Management Form */}
       <form onSubmit={handleSaveBudget} className="p-6 bg-slate-50 rounded-lg shadow space-y-4">
-        <h3 className="text-xl font-semibold text-slate-700 mb-1">Manage Budget</h3>
-        <p className="text-sm text-slate-500 mb-3">Set your total budget here. This will be used for tracking against your expenses.</p>
+        <h3 className="text-xl font-semibold text-slate-800 mb-1">Manage Budget</h3>
+        <p className="text-sm text-slate-700 mb-3">Set your total budget here. This will be used for tracking against your expenses.</p>
         <div>
           <label htmlFor="totalBudget" className="block text-sm font-medium text-slate-700">
             Total Budget (₹)
           </label>
-          <input id="totalBudget" type="number" value={budgetInput} onChange={(e) => setBudgetInput(e.target.value)} placeholder="e.g., 50000" min="0" step="any"
-            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
-          <p className="mt-1 text-xs text-slate-500">Leave empty or set to 0 to remove the budget.</p>
+          <input
+            id="totalBudget"
+            type="number"
+            value={budgetInput}
+            onChange={(e) => setBudgetInput(e.target.value)}
+            placeholder="e.g., 50000"
+            min="0"
+            step="any"
+            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
+          />
+          <p className="mt-1 text-xs text-slate-600">Leave empty or set to 0 to remove the budget.</p>
         </div>
-        <button type="submit" className="w-full sm:w-auto flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+        <button
+          type="submit"
+          className="w-full sm:w-auto flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
+        >
           Save Budget
         </button>
       </form>
 
       {/* Budget Summary Text */}
-      <div className="p-4 bg-indigo-50 rounded-lg shadow">
-        <h4 className="text-lg font-semibold text-indigo-700 mb-2">Budget Overview</h4>
+      <div className="p-4 bg-blue-50 rounded-lg shadow">
+        <h4 className="text-lg font-semibold text-blue-700 mb-2">Budget Overview</h4>
         <p className="text-md">Current Total Budget: <span className="font-medium">{formatCurrency(totalBudget, 'Not Set')}</span></p>
         <p className="text-md">Total Expenses: <span className="font-medium">{formatCurrency(totalExpenses)}</span></p>
         {totalBudget !== undefined && (
-          <p className={`text-md ${remainingBudget !== undefined && remainingBudget < 0 ? 'text-red-600' : 'text-green-600'}`}>
+          <p className={`text-md ${remainingBudget !== undefined && remainingBudget < 0 ? 'text-red-600' : 'text-emerald-600'}`}>
             Remaining Budget: <span className="font-medium">{formatCurrency(remainingBudget)}</span>
           </p>
         )}
-         {totalBudget === undefined && <p className="text-sm text-slate-500 mt-1">Set a budget to see your remaining amount.</p>}
+         {totalBudget === undefined && <p className="text-sm text-slate-600 mt-1">Set a budget to see your remaining amount.</p>}
       </div>
       
       {expenses.length === 0 && totalBudget === undefined && (
-         <p className="text-slate-500 text-center py-10">No expense data and no budget set. Add expenses or set a budget to see graphs.</p>
+         <p className="text-slate-600 text-center py-10">No expense data and no budget set. Add expenses or set a budget to see graphs.</p>
       )}
 
       {/* Budget vs. Expenses Chart */}

@@ -138,7 +138,7 @@ export default function ExpensesComponent() {
   return (
     <div className="space-y-6">
       <form onSubmit={handleAddExpense} className="p-6 bg-slate-50 rounded-lg shadow space-y-4">
-        <h3 className="text-xl font-semibold text-slate-700 mb-4">Add New Expense</h3>
+        <h3 className="text-xl font-semibold text-slate-800 mb-4">Add New Expense</h3>
         <div>
           <label htmlFor="expenseName" className="block text-sm font-medium text-slate-700">Name</label>
           <input
@@ -147,7 +147,7 @@ export default function ExpensesComponent() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="e.g., Textbooks"
-            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
           />
         </div>
         <div>
@@ -158,7 +158,7 @@ export default function ExpensesComponent() {
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             placeholder="e.g., 10000.00"
-            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
           />
         </div>
         <div>
@@ -169,7 +169,7 @@ export default function ExpensesComponent() {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             placeholder="e.g., Academics"
-            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
           />
         </div>
         <div>
@@ -179,20 +179,20 @@ export default function ExpensesComponent() {
             type="date"
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-600 focus:border-blue-600 sm:text-sm"
           />
         </div>
         <button
           type="submit"
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600"
         >
           Add Expense
         </button>
       </form>
 
       <div className="p-6 bg-slate-50 rounded-lg shadow space-y-4">
-        <h3 className="text-xl font-semibold text-slate-700 mb-2">Import Expenses from CSV</h3>
-        <p className="text-sm text-slate-600 mb-3">
+        <h3 className="text-xl font-semibold text-slate-800 mb-2">Import Expenses from CSV</h3>
+        <p className="text-sm text-slate-700 mb-3">
           CSV file should have headers: <code>name</code>, <code>amount</code>, <code>category</code>, <code>date</code>, <code>isPurchased</code> (true/false).
         </p>
         <input
@@ -200,21 +200,21 @@ export default function ExpensesComponent() {
           accept=".csv"
           onChange={handleCsvUpload}
           disabled={isUploading}
-          className="block w-full text-sm text-slate-500
+          className="block w-full text-sm text-slate-700
             file:mr-4 file:py-2 file:px-4
             file:rounded-full file:border-0
             file:text-sm file:font-semibold
-            file:bg-indigo-50 file:text-indigo-700
-            hover:file:bg-indigo-100
+            file:bg-blue-50 file:text-blue-700
+            hover:file:bg-blue-100
             disabled:opacity-50"
         />
-        {isUploading && <p className="text-sm text-indigo-600 mt-2">Uploading and processing, please wait...</p>}
+        {isUploading && <p className="text-sm text-blue-600 mt-2">Uploading and processing, please wait...</p>}
       </div>
 
       <div className="mt-8">
-        <h3 className="text-xl font-semibold text-slate-700 mb-4">Your Expenses</h3>
+        <h3 className="text-xl font-semibold text-slate-800 mb-4">Your Expenses</h3>
         {expenses.length === 0 ? (
-          <p className="text-slate-500">No expenses recorded yet.</p>
+          <p className="text-slate-600">No expenses recorded yet.</p>
         ) : (
           <ul className="space-y-3">
             {expenses.map((expense) => (
@@ -230,8 +230,8 @@ export default function ExpensesComponent() {
                     onClick={() => handleTogglePurchased(expense)}
                     className={`px-3 py-1 text-xs font-medium rounded-full
                       ${expense.isPurchased 
-                        ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200' 
-                        : 'bg-green-100 text-green-700 hover:bg-green-200'}`}
+                        ? 'bg-amber-100 text-amber-700 hover:bg-amber-200' 
+                        : 'bg-emerald-100 text-emerald-700 hover:bg-emerald-200'}`}
                   >
                     {expense.isPurchased ? 'Unpurchase' : 'Purchase'}
                   </button>
@@ -245,7 +245,7 @@ export default function ExpensesComponent() {
                   )}
                   <button
                     onClick={() => handleDeleteExpense(expense._id)}
-                    className="text-red-500 hover:text-red-700 text-sm font-medium"
+                    className="text-red-600 hover:text-red-700 text-sm font-medium"
                   >
                     Delete
                   </button>
